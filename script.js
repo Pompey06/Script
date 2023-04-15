@@ -4,13 +4,6 @@ $(document).ready(function () {
 
   var translateX = 0,
     translateY = 0,
-    // translateZ = 0,
-    // stepZ = 20,
-
-
-    // scaleCount = 1,
-    // stepScale = 0.2,
-
     lastMousePosX = 0,
     lastMousePosY = 0,
 
@@ -24,6 +17,10 @@ $(document).ready(function () {
 
     containerTop = $('#slideContainer').position().top,
     containerLeft = $('#slideContainer').position().left,
+
+
+    phoneToucheOne = 0,
+    phoneToucheTwo = 0,
 
 
 
@@ -44,15 +41,6 @@ $(document).ready(function () {
     initial_mouse_Y = 0;
 
   function apply_coords() {
-    // $("#slide").css("transform", 'perspective(100px) translate3d(' + translateX + 'px, ' + translateY + 'px, ' + translateZ + 'px)');
-    // $("#slide").css("transform", 'perspective(100px) translate(' + translateX + 'px, ' + translateY + 'px) scale(' + scaleCount + ')');
-
-
-
-    // $("#slide").css("transform", 'perspective(100px) translate(' + translateX + 'px, ' + translateY + 'px) scale(' + scaleCount + ')');
-
-
-
     $("#slide").css({ 'transform': 'translate(' + translateX + 'px, ' + translateY + 'px)', "width": slideWidth, "min-height": slideHeight });
   }
 
@@ -170,12 +158,25 @@ $(document).ready(function () {
     is_dragging = false;
   })
 
+  function calculateScale(touch1, touch2) {
+    // Вычисление расстояния между двумя точками на экране
+    var dx = touch1.clientX - touch2.clientX;
+    var dy = touch1.clientY - touch2.clientY;
+    var distance = Math.sqrt(dx * dx + dy * dy);
+    // Вычисление масштаба на основе расстояния между двумя точками
+    var scale = distance / initialDistance;
+    return scale;
+  }
+
   $("#slideContainer").on('touchmove', e => {
     console.log(e.touches)
     onDragging(e, 'touchmove', true);
       if (e.touches.length == 2) {
+        // phoneToucheOne
+        // phoneToucheTwo
         // Вычисление текущего масштаба страницы на основе координат движения пальцев
-        $('.count').text('Helo');
+        var currentScale = calculateScale(e.touches[0], e.touches[1]);
+        console.log('Текущий масштабm: ' + currentScale);
       }
   })
 });
