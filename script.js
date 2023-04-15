@@ -1,4 +1,14 @@
 $(document).ready(function () {
+  var triggers = 0;
+  $(document).on('mousewheel', function (e) {
+    $('.count').text(++triggers);
+  });
+
+  $(document).on('touchmove', function () {
+    $(document).trigger('mousewheel');
+  });
+
+
 
   var translateX = 0,
     translateY = 0,
@@ -121,16 +131,19 @@ $(document).ready(function () {
     }
     if (is_dragging) {
       e.preventDefault();
-      var currentX = e.type === type ? e.changedTouches[0].pageX : e.pageX;
-      var currentY = e.type === type ? e.changedTouches[0].pageY : e.pageY;
-      translateX = initial_obj_X + (currentX - initial_mouse_X);
-      translateY = initial_obj_Y + (currentY - initial_mouse_Y);
+      lastMousePosX = initial_obj_X + (e.pageX - initial_mouse_X);
+      lastMousePosY = initial_obj_Y + (e.pageY - initial_mouse_Y);
+      const maxPosX = containerWidth - (containerPaddingLeft + slideWidth);
+      console.log(maxPosX, lastMousePosX);
+      translateX = (lastMousePosX <= -containerPaddingLeft) ? -containerPaddingLeft : (lastMousePosX >= maxPosX) ? maxPosX : lastMousePosX;
+      translateY = (lastMousePosY <= -containerPaddingTop) ? -containerPaddingTop : (lastMousePosY >= containerPaddingBottom) ? containerPaddingBottom : lastMousePosY; 
       apply_coords();
     } else {
-      initial_mouse_X = e.type === type ? e.changedTouches[0].pageX : e.pageX;
-      initial_mouse_Y = e.type === type ? e.changedTouches[0].pageY : e.pageY;
+      initial_mouse_X = e.pageX;
+      initial_mouse_Y = e.pageY;
       initial_obj_X = translateX;
       initial_obj_Y = translateY;
+      // console.log(translateX, containerWidth);
     }
   }
 
@@ -148,19 +161,13 @@ $(document).ready(function () {
     });
 
   $('#zoom-in').on("click", () => {
-    // scaleCount = (scaleCount < 3) ? scaleCount + stepScale : scaleCount;
-
     onZoomIn();
-    // apply_coords();
     phonePositionCount();
   })
 
   $('#zoom-out').on("click", () => {
-    // scaleCount = (scaleCount > 0.5) ? scaleCount - stepScale : scaleCount;
-
     onZoomOut();
     phonePositionCount();
-    // apply_coords();
   })
 
   $("#slideContainer").on('touchstart', e => {
@@ -174,15 +181,4 @@ $(document).ready(function () {
   $("#slideContainer").on('touchmove', e => {
     onDragging(e, 'touchmove', true)
   })
-  // $(window).on('touchstart', e => {
-  //   is_dragging = true;
-  // })
-
-  // $(window).on('touchend', e => {
-  //   is_dragging = false;
-  // })
-
-  // $(window).on('touchmove', e => {
-  //   onDragging(e, 'touchmove', true)
-  // })
 });
