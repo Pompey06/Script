@@ -116,7 +116,7 @@ $(document).ready(function () {
       const maxPosX = containerWidth - (containerPaddingLeft + slideWidth);
       console.log(maxPosX, lastMousePosX);
       translateX = (lastMousePosX <= -containerPaddingLeft) ? -containerPaddingLeft : (lastMousePosX >= maxPosX) ? maxPosX : lastMousePosX;
-      translateY = (lastMousePosY <= -containerPaddingTop) ? -containerPaddingTop : (lastMousePosY >= containerPaddingBottom) ? containerPaddingBottom : lastMousePosY; 
+      translateY = (lastMousePosY <= -containerPaddingTop) ? -containerPaddingTop : (lastMousePosY >= containerPaddingBottom) ? containerPaddingBottom : lastMousePosY;
       apply_coords();
     } else {
       initial_mouse_X = e.pageX;
@@ -171,12 +171,12 @@ $(document).ready(function () {
   $("#slideContainer").on('touchmove', e => {
     console.log(e.touches)
     onDragging(e, 'touchmove', true);
-      if (e.touches.length == 2) {
-        // phoneToucheOne
-        // phoneToucheTwo
-        // Вычисление текущего масштаба страницы на основе координат движения пальцев
-        var currentScale = calculateScale(e.touches[0], e.touches[1]);
-        $('#count').text('Текущий масштабm: ' + currentScale);
-      }
+    if (e.touches.length == 2) {
+      // phoneToucheOne
+      // phoneToucheTwo
+      // Вычисление текущего масштаба страницы на основе координат движения пальцев
+      var currentScale = calculateScale(e.touches[0], e.touches[1]);
+      $('#count').text('Текущий масштабm: ' + currentScale);
+    }
   })
 });
