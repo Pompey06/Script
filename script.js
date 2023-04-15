@@ -163,26 +163,26 @@ $(document).ready(function () {
     // apply_coords();
   })
 
-  // $("#slideContainer").on('touchstart', e => {
-  //   is_dragging = true;
-  // })
-
-  // $("#slideContainer").on('touchend', e => {
-  //   is_dragging = false;
-  // })
-
-  // $("#slideContainer").on('touchmove', e => {
-  //   onDragging(e, 'touchmove', true)
-  // })
-  $(window).on('touchstart', e => {
+  $("#slideContainer").on('touchstart', e => {
     is_dragging = true;
   })
 
-  $(window).on('touchend', e => {
+  $("#slideContainer").on('touchend', e => {
     is_dragging = false;
   })
 
-  $(window).on('touchmove', e => {
+  $("#slideContainer").on('touchmove', e => {
     onDragging(e, 'touchmove', true)
   })
+  // $(window).on('touchstart', e => {
+  //   is_dragging = true;
+  // })
+
+  // $(window).on('touchend', e => {
+  //   is_dragging = false;
+  // })
+
+  // $(window).on('touchmove', e => {
+  //   onDragging(e, 'touchmove', true)
+  // })
 });
