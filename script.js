@@ -170,13 +170,15 @@ $(document).ready(function () {
 
   $("#slideContainer").on('touchmove', e => {
     console.log(e.touches)
-    onDragging(e, 'touchmove', true);
     if (e.touches.length == 2) {
       // phoneToucheOne
       // phoneToucheTwo
       // Вычисление текущего масштаба страницы на основе координат движения пальцев
       var currentScale = calculateScale(e.touches[0], e.touches[1]);
       $('#count').text('Текущий масштабm: ' + currentScale);
+
+      return;
     }
+    onDragging(e, 'touchmove', true);
   })
 });
