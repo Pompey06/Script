@@ -169,7 +169,6 @@ $(document).ready(function () {
   // }
 
   $("#slideContainer").on('touchmove', e => {
-    console.log(e.touches)
     if (e.touches.length == 2) {
       // phoneToucheOne
       // phoneToucheTwo
@@ -178,6 +177,7 @@ $(document).ready(function () {
       var dx = touch1.clientX - touch2.clientX;
       var dy = touch1.clientY - touch2.clientY;
       var distance = Math.sqrt(dx * dx + dy * dy);
+      $('#count').text(touch1.clientX);
       if (distance > lastDistance) {
         $('#count').text('distance > lastDistance');
         lastDistance = distance;
