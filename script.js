@@ -174,17 +174,17 @@ $(document).ready(function () {
       // phoneToucheTwo
       // Вычисление текущего масштаба страницы на основе координат движения пальцев
       // var currentScale = calculateScale(e.touches[0], e.touches[1]);
-      var dx = touch1.clientX - touch2.clientX;
-      var dy = touch1.clientY - touch2.clientY;
-      var distance = Math.sqrt(dx * dx + dy * dy);
-      $('#count').text('start');
-      if (distance > lastDistance) {
-        $('#count').text('distance > lastDistance');
-        lastDistance = distance;
-      } else {
-        $('#count').text('distance < lastDistance');
-        lastDistance = distance;
-      }
+      // var dx = touch1.clientX - touch2.clientX;
+      // var dy = touch1.clientY - touch2.clientY;
+      // var distance = Math.sqrt(dx * dx + dy * dy);
+      // $('#count').text('start');
+      // if (distance > lastDistance) {
+      //   $('#count').text('distance > lastDistance');
+      //   lastDistance = distance;
+      // } else {
+      //   $('#count').text('distance < lastDistance');
+      //   lastDistance = distance;
+      // }
       return;
     } else {
       onDragging(e, 'touchmove', true);
