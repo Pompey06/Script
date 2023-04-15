@@ -1,12 +1,4 @@
 $(document).ready(function () {
-  var triggers = 0;
-  $(document).on('mousewheel', function (e) {
-    $('.count').text(++triggers);
-  });
-
-  $(document).on('touchmove', function () {
-    $(document).trigger('mousewheel');
-  });
 
 
 
@@ -180,5 +172,16 @@ $(document).ready(function () {
 
   $("#slideContainer").on('touchmove', e => {
     onDragging(e, 'touchmove', true)
+      if (у.touches.length == 2) {
+        // Вычисление текущего масштаба страницы на основе координат движения пальцев
+        var currentScale = calculateScale(у.touches[0], у.touches[1]);
+        $('.count').text('Текущий масштаб: ' + currentScale);
+        console.log('Текущий масштаб: ' + currentScale);
+      }
   })
+
+  document.addEventListener('gesturechange', function (event) {
+    // Обработка события изменения масштаба
+    console.log('Масштабирование страницы!');
+  });
 });
