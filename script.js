@@ -178,7 +178,8 @@ $(document).ready(function () {
       $('#count').text('Текущий масштабm: ' + currentScale);
 
       return;
+    } else {
+      onDragging(e, 'touchmove', true);
     }
-    onDragging(e, 'touchmove', true);
   })
 });
