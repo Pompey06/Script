@@ -35,7 +35,7 @@ $(document).ready(function () {
       // 	translateZ = translateZ + stepZ;
       // }
       if (zoomOut) {
-        scaleCount = (scaleCount > 0.5 ) ? scaleCount - stepScale : scaleCount;
+        scaleCount = (scaleCount > 0.5) ? scaleCount - stepScale : scaleCount;
       } else {
         scaleCount = (scaleCount < 3) ? scaleCount + stepScale : scaleCount;
       }
@@ -76,5 +76,17 @@ $(document).ready(function () {
   $('#zoom-out').on("click", () => {
     scaleCount = (scaleCount > 0.5) ? scaleCount - stepScale : scaleCount;
     apply_coords();
+  })
+
+  $("#slide").on('touchstart', e => {
+    console.log('start')
+  })
+
+  $("#slide").on('touchend', e => {
+    console.log('end')
+  })
+
+  $("#slide").on('touchmove', e => {
+    console.log('move')
   })
 });
