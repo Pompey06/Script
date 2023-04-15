@@ -176,7 +176,7 @@ $(document).ready(function () {
         // phoneToucheTwo
         // Вычисление текущего масштаба страницы на основе координат движения пальцев
         var currentScale = calculateScale(e.touches[0], e.touches[1]);
-        console.log('Текущий масштабm: ' + currentScale);
+        $('#count').text('Текущий масштабm: ' + currentScale);
       }
   })
 });
