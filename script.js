@@ -3,9 +3,22 @@ $(document).ready(function () {
   var translateX = 0,
     translateY = 0,
     // translateZ = 0,
-    scaleCount = 1,
     // stepZ = 20,
-    stepScale = 0.2,
+
+
+    // scaleCount = 1,
+    // stepScale = 0.2,
+
+
+    startSlideWidth = $("#slide").innerWidth(),
+    slideWidth = $("#slide").innerWidth(),
+    slideWidthStep = $("#slide").innerWidth() / 10,
+    startSlideHeight = $("#slide").innerHeight(),
+    slideHeight = $("#slide").innerHeight(),
+    slideHeightStep = $("#slide").innerHeight() / 10,
+
+
+
     initial_obj_X = 0,
     initial_obj_Y = 0,
     initial_mouse_X = 0,
@@ -13,7 +26,15 @@ $(document).ready(function () {
 
   function apply_coords() {
     // $("#slide").css("transform", 'perspective(100px) translate3d(' + translateX + 'px, ' + translateY + 'px, ' + translateZ + 'px)');
-    $("#slide").css("transform", 'perspective(100px) translate(' + translateX + 'px, ' + translateY + 'px) scale(' + scaleCount + ')');
+    // $("#slide").css("transform", 'perspective(100px) translate(' + translateX + 'px, ' + translateY + 'px) scale(' + scaleCount + ')');
+
+
+
+    // $("#slide").css("transform", 'perspective(100px) translate(' + translateX + 'px, ' + translateY + 'px) scale(' + scaleCount + ')');
+
+
+
+    $("#slide").css({ 'transform': 'translate(' + translateX + 'px, ' + translateY + 'px)', "width": slideWidth, "min-height": slideHeight  });
   }
 
 
@@ -34,14 +55,44 @@ $(document).ready(function () {
       // } else {
       // 	translateZ = translateZ + stepZ;
       // }
+
       if (zoomOut) {
-        scaleCount = (scaleCount > 0.5) ? scaleCount - stepScale : scaleCount;
+        onZoomOut();
+        // scaleCount = (scaleCount > 0.5) ? scaleCount - stepScale : scaleCount;
       } else {
-        scaleCount = (scaleCount < 3) ? scaleCount + stepScale : scaleCount;
+        // scaleCount = (scaleCount < 3) ? scaleCount + stepScale : scaleCount;
+        onZoomIn();
       }
       apply_coords();
     }
   });
+
+  function onZoomIn() {
+    slideWidth = (slideWidth < (startSlideWidth * 3)) ? slideWidth + slideWidthStep : slideWidth;
+    slideHeight = (slideHeight < (startSlideHeight * 3)) ? slideHeight + slideHeightStep : slideHeight;
+  }
+
+  function onZoomOut() {
+    slideWidth = (slideWidth > (startSlideWidth / 3)) ? slideWidth - slideWidthStep : slideWidth;
+    slideHeight = (slideHeight > (startSlideHeight / 3)) ? slideHeight - slideHeightStep : slideHeight;
+  }
+
+
+  function onDragging(e, type) {
+    if (is_dragging) {
+      e.preventDefault();
+      var currentX = e.type === type ? e.changedTouches[0].pageX : e.pageX;
+      var currentY = e.type === type ? e.changedTouches[0].pageY : e.pageY;
+      translateX = initial_obj_X + (currentX - initial_mouse_X);
+      translateY = initial_obj_Y + (currentY - initial_mouse_Y);
+      apply_coords();
+    } else {
+      initial_mouse_X = e.type === type ? e.changedTouches[0].pageX : e.pageX;
+      initial_mouse_Y = e.type === type ? e.changedTouches[0].pageY : e.pageY;
+      initial_obj_X = translateX;
+      initial_obj_Y = translateY;
+    }
+  }
 
 
   var is_dragging = false;
@@ -50,43 +101,35 @@ $(document).ready(function () {
       is_dragging = true;
     })
     .mousemove(function (e) {
-      if (is_dragging) {
-        e.preventDefault();
-        var currentX = e.type === 'touchend' ? e.changedTouches[0].pageX : e.pageX;
-        var currentY = e.type === 'touchend' ? e.changedTouches[0].pageY : e.pageY;
-        translateX = initial_obj_X + (currentX - initial_mouse_X);
-        translateY = initial_obj_Y + (currentY - initial_mouse_Y);
-        apply_coords();
-      } else {
-        initial_mouse_X = e.type === 'touchend' ? e.changedTouches[0].pageX : e.pageX;
-        initial_mouse_Y = e.type === 'touchend' ? e.changedTouches[0].pageY : e.pageY;
-        initial_obj_X = translateX;
-        initial_obj_Y = translateY;
-      }
+      onDragging(e, 'touchend')
     })
     .mouseup(function () {
       is_dragging = false;
     });
 
   $('#zoom-in').on("click", () => {
-    scaleCount = (scaleCount < 3) ? scaleCount + stepScale : scaleCount;
+    // scaleCount = (scaleCount < 3) ? scaleCount + stepScale : scaleCount;
+
+    onZoomIn();
     apply_coords();
   })
 
   $('#zoom-out').on("click", () => {
-    scaleCount = (scaleCount > 0.5) ? scaleCount - stepScale : scaleCount;
+    // scaleCount = (scaleCount > 0.5) ? scaleCount - stepScale : scaleCount;
+
+    onZoomOut();
     apply_coords();
   })
 
-  $("#slide").on('touchstart', e => {
-    console.log('start')
+  $("#slideContainer").on('touchstart', e => {
+    is_dragging = true;
   })
 
-  $("#slide").on('touchend', e => {
-    console.log('end')
+  $("#slideContainer").on('touchend', e => {
+    is_dragging = false;
   })
 
-  $("#slide").on('touchmove', e => {
-    console.log('move')
+  $("#slideContainer").on('touchmove', e => {
+    onDragging(e, 'touchmove')
   })
 });
