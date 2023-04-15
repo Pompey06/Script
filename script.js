@@ -171,17 +171,11 @@ $(document).ready(function () {
   })
 
   $("#slideContainer").on('touchmove', e => {
-    onDragging(e, 'touchmove', true)
-      if (у.touches.length == 2) {
+    console.log(e.touches)
+    onDragging(e, 'touchmove', true);
+      if (e.touches.length == 2) {
         // Вычисление текущего масштаба страницы на основе координат движения пальцев
-        var currentScale = calculateScale(у.touches[0], у.touches[1]);
-        $('.count').text('Текущий масштаб: ' + currentScale);
-        console.log('Текущий масштаб: ' + currentScale);
+        $('.count').text('Helo');
       }
   })
-
-  document.addEventListener('gesturechange', function (event) {
-    // Обработка события изменения масштаба
-    console.log('Масштабирование страницы!');
-  });
 });
