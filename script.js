@@ -174,13 +174,14 @@ $(document).ready(function () {
         // $("#slideContainer").css({ 'min-width': slideWidth, 'max-width': slideWidth, 'width': slideWidth });
         if (scale > 0) {
           onZoomIn();
+          apply_coords();
         } else if (scale < 0) {
           onZoomOut();
+          apply_coords();
         }
         // containerWidth = $("#slideContainer").innerWidth();
         // $('#count').text(`slideWidth: ${slideWidth}, slideHeight: ${slideHeight}, scale: ${scale}`);
         $('#scale').text(`${scale}`);
-        apply_coords();
       }
       lastDist = dist;
       return;
