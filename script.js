@@ -217,6 +217,37 @@ $(document).ready(function () {
 
 
 
+    lastMousePosX = 0,
+    lastMousePosY = 0,
+    slidePaddingTop = removePxStr($('#slide').css("padding-top")),
+    slidePaddingLeft = removePxStr($('#slide').css("padding-left")),
+    slidePaddingBottom = removePxStr($('#slide').css("padding-bottom")),
+    slidePaddingRight = removePxStr($('#slide').css("padding-right")),
+
+    slideMarginTop = removePxStr($('#slide').css("margin-top")),
+    slideMarginLeft = removePxStr($('#slide').css("margin-left")),
+    slideMarginBottom = removePxStr($('#slide').css("margin-bottom")),
+    slideMarginRight = removePxStr($('#slide').css("margin-right")),
+
+
+    startSlideWidth = $("#slide").innerWidth(),
+    slideWidth = startSlideWidth - (slidePaddingLeft + slidePaddingRight),
+    slideWidthStep = $("#slide").innerWidth() / 7,
+    startSlideHeight = $("#slide").innerHeight(),
+    slideHeight = $("#slide").innerHeight(),
+    slideHeightStep = $("#slide").innerHeight() / 7,
+
+    containerTop = $('#slideContainer').position().top,
+
+    containerPaddingTop = removePxStr($('#slideContainer').css("padding-top")),
+    containerPaddingLeft = removePxStr($('#slideContainer').css("padding-left")),
+    containerPaddingBottom = removePxStr($('#slideContainer').css("padding-bottom")),
+    containerPaddingRight = removePxStr($('#slideContainer').css("padding-right")),
+
+
+    containerWidth = $("#slideContainer").innerWidth(),
+
+
     slideHeight = $("#slide").innerHeight(),
     containerHeight = $("#slideContainer").innerHeight(),
     ratioContainerToSlideH = containerHeight / slideHeight;
@@ -294,10 +325,22 @@ $(document).ready(function () {
     }
   })
 
+  function phonePositionCount() {
+    const maxPosX = containerPaddingRight + slideMarginRight;
+    translateX = (lastMousePosX <= -(containerPaddingLeft + slideMarginLeft)) ? -(containerPaddingLeft + slideMarginLeft) : (lastMousePosX >= maxPosX) ? maxPosX : lastMousePosX;
+    const maxPosY = containerPaddingBottom + slideMarginBottom;
+    translateY = (lastMousePosY <= -containerPaddingTop) ? -containerPaddingTop : (lastMousePosY >= maxPosY) ? maxPosY : lastMousePosY;
+    apply_coords();
+  }
+
+  function removePxStr(str) {
+    const indexOfPx = str.indexOf('px');
+    return +str.slice(0, indexOfPx);
+  }
 
 
   $("#slideContainer").on('touchmove', e => {
-    if (e.touches.length == 2) { 
+    if (e.touches.length == 2) {
       var delta = e.delta || e.originalEvent.wheelDelta;
       var zoomOut;
       if (delta === undefined) {
@@ -315,19 +358,13 @@ $(document).ready(function () {
       apply_coords();
       return;
     }
-    if (is_dragging) {
-      e.preventDefault();
-      var currentX = e.type === 'touchend' ? e.changedTouches[0].pageX : e.pageX;
-      var currentY = e.type === 'touchend' ? e.changedTouches[0].pageY : e.pageY;
-      translateX = initial_obj_X + (currentX - initial_mouse_X);
-      translateY = initial_obj_Y + (currentY - initial_mouse_Y);
-      apply_coords();
-    } else {
-      initial_mouse_X = e.type === 'touchend' ? e.changedTouches[0].pageX : e.pageX;
-      initial_mouse_Y = e.type === 'touchend' ? e.changedTouches[0].pageY : e.pageY;
-      initial_obj_X = translateX;
-      initial_obj_Y = translateY;
-    }
+    e.preventDefault();
+    lastMousePosX =
+      (slideWidth / startSlideWidth >= 0.43)
+        ? e.changedTouches[0].pageX - ((slideWidth) + ((screen.width - containerWidth) / 2) + containerPaddingLeft)
+        : e.changedTouches[0].pageX - ((slideWidth * 2) + ((screen.width - containerWidth) / 2) + containerPaddingLeft);
+    lastMousePosY = e.changedTouches[0].pageY - ((slideHeight / 2) + containerPaddingTop + containerTop);
+    phonePositionCount();
   })
 
 
