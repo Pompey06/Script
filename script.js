@@ -107,7 +107,7 @@ $(document).ready(function () {
           (slideWidth / startSlideWidth >= 0.43)
           ? e.changedTouches[0].pageX - ((slideWidth) + ((screen.width - containerWidth) / 2) + containerPaddingLeft)
           : ((slideWidth / startSlideWidth < 0.15))
-          ? e.changedTouches[0].pageX - ((slideWidth * 3) + ((screen.width - containerWidth) / 2) + containerPaddingLeft) 
+          ? e.changedTouches[0].pageX - ((slideWidth * 2) + ((screen.width - containerWidth) / 2) + containerPaddingLeft) 
           : e.changedTouches[0].pageX - ((slideWidth * 1.5) + ((screen.width - containerWidth) / 2) + containerPaddingLeft);
         lastMousePosY = e.changedTouches[0].pageY - ((slideHeight / 2 ) + containerPaddingTop + containerTop);
         phonePositionCount();
