@@ -164,7 +164,7 @@ $(document).ready(function () {
       var dist = Math.hypot(touch2.pageX - touch1.pageX, touch2.pageY - touch1.pageY);
       if (lastDist) {
         let delta = dist - lastDist;
-        let scale = delta / 1000;
+        let scale = delta / 100;
         const newSlideWidth = slideWidth + (slideWidth * scale);
         const newSlideHeight = slideHeight + (slideHeight * scale);
         slideWidth = (slideWidth <= (startSlideWidth / 5)) ? slideWidth : (slideWidth >= (startSlideWidth * 5)) ? slideWidth : newSlideWidth ;
