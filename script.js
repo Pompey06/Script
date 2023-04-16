@@ -42,7 +42,9 @@ $(document).ready(function () {
     initial_mouse_Y = 0;
 
   function apply_coords() {
-    $("#slide").css({ 'transform': 'translate(' + translateX + 'px, ' + translateY + 'px)', "min-width": slideWidth, 'width': slideWidth, "min-height": slideHeight, 'height': slideHeight });
+    // $("#slide").css({ 'transform': 'translate(' + translateX + 'px, ' + translateY + 'px)', "min-width": slideWidth, 'width': slideWidth, "min-height": slideHeight, 'height': slideHeight });
+    $("#slide").css({ 'transform': 'translate(' + translateX + 'px, ' + translateY + 'px)', "min-width": slideWidth, 'width': slideWidth });
+
     $("#slideContainer").css({ 'min-width': slideWidth, 'max-width': slideWidth, 'width': slideWidth });
     containerWidth = $("#slideContainer").innerWidth();
   }
@@ -102,12 +104,9 @@ $(document).ready(function () {
     if (is_phone) {
       if (is_dragging) {
         e.preventDefault();
-        console.log(slideWidth / startSlideWidth)
         lastMousePosX =
           (slideWidth / startSlideWidth >= 0.43)
           ? e.changedTouches[0].pageX - ((slideWidth) + ((screen.width - containerWidth) / 2) + containerPaddingLeft)
-          // : ((slideWidth / startSlideWidth < 0.15))
-          // ? e.changedTouches[0].pageX - ((slideWidth * 2) + ((screen.width - containerWidth) / 2) + containerPaddingLeft) 
           : e.changedTouches[0].pageX - ((slideWidth * 1.5) + ((screen.width - containerWidth) / 2) + containerPaddingLeft);
         lastMousePosY = e.changedTouches[0].pageY - ((slideHeight / 2 ) + containerPaddingTop + containerTop);
         phonePositionCount();
