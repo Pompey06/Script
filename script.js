@@ -214,14 +214,14 @@ $(document).ready(function () {
     initial_obj_Y = 0,
     initial_mouse_X = 0,
     initial_mouse_Y = 0,
-    
-    
-    
+
+
+
     slideHeight = $("#slide").innerHeight(),
     containerHeight = $("#slideContainer").innerHeight(),
     ratioContainerToSlideH = containerHeight / slideHeight;
-  
-  
+
+
 
   function apply_coords() {
     $("#slide").css("transform", 'perspective(100px) translate3d(' + translateX + 'px, ' + translateY + 'px, ' + translateZ + 'px)');
@@ -252,22 +252,6 @@ $(document).ready(function () {
     }
   });
 
-  $("#slideContainer").on('touchmove', e => {
-    if (is_dragging) {
-      e.preventDefault();
-      var currentX = e.type === 'touchend' ? e.changedTouches[0].pageX : e.pageX;
-      var currentY = e.type === 'touchend' ? e.changedTouches[0].pageY : e.pageY;
-      translateX = initial_obj_X + (currentX - initial_mouse_X);
-      translateY = initial_obj_Y + (currentY - initial_mouse_Y);
-      apply_coords();
-    } else {
-      initial_mouse_X = e.type === 'touchend' ? e.changedTouches[0].pageX : e.pageX;
-      initial_mouse_Y = e.type === 'touchend' ? e.changedTouches[0].pageY : e.pageY;
-      initial_obj_X = translateX;
-      initial_obj_Y = translateY;
-    }
-  })
-
 
   var is_dragging = false;
   $("#slideContainer")
@@ -292,8 +276,8 @@ $(document).ready(function () {
     .mouseup(function () {
       is_dragging = false;
     });
-  
-  
+
+
   $('#zoom-in').on("click", () => {
     translateZ = (translateZ < 80) ? translateZ + stepZ : translateZ;
     apply_coords();
@@ -304,9 +288,45 @@ $(document).ready(function () {
     apply_coords();
   })
 
-    $(window).on('touchmove', e => {
+  $(window).on('touchmove', e => {
     if (e.touches.length == 2) {
       e.preventDefault();
+    }
+  })
+
+
+
+  $("#slideContainer").on('touchmove', e => {
+    if (e.touches.length == 2) { 
+      var delta = e.delta || e.originalEvent.wheelDelta;
+      var zoomOut;
+      if (delta === undefined) {
+        delta = e.originalEvent.detail;
+        zoomOut = delta ? delta < 0 : e.originalEvent.deltaY > 0;
+        zoomOut = !zoomOut;
+      } else {
+        zoomOut = delta ? delta < 0 : e.originalEvent.deltaY > 0;
+      }
+      if (zoomOut) {
+        translateZ = (translateZ > -60) ? translateZ - stepZ : translateZ;
+      } else {
+        translateZ = (translateZ < 60) ? translateZ + stepZ : translateZ;
+      }
+      apply_coords();
+      return;
+    }
+    if (is_dragging) {
+      e.preventDefault();
+      var currentX = e.type === 'touchend' ? e.changedTouches[0].pageX : e.pageX;
+      var currentY = e.type === 'touchend' ? e.changedTouches[0].pageY : e.pageY;
+      translateX = initial_obj_X + (currentX - initial_mouse_X);
+      translateY = initial_obj_Y + (currentY - initial_mouse_Y);
+      apply_coords();
+    } else {
+      initial_mouse_X = e.type === 'touchend' ? e.changedTouches[0].pageX : e.pageX;
+      initial_mouse_Y = e.type === 'touchend' ? e.changedTouches[0].pageY : e.pageY;
+      initial_obj_X = translateX;
+      initial_obj_Y = translateY;
     }
   })
 
