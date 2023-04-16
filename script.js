@@ -170,7 +170,6 @@ $(document).ready(function () {
           onZoomOut();
           apply_coords();
         }
-        $('#scale').text(`${scale}`);
       }
       lastDist = dist;
       return;
