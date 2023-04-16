@@ -361,12 +361,13 @@ $(document).ready(function () {
       return;
     }
     e.preventDefault();
-    lastMousePosX =
+    translateX =
       (slideWidth / startSlideWidth >= 0.43)
         ? e.changedTouches[0].pageX - ((slideWidth) + ((screen.width - containerWidth) / 2) + containerPaddingLeft)
         : e.changedTouches[0].pageX - ((slideWidth * 2) + ((screen.width - containerWidth) / 2) + containerPaddingLeft);
-    lastMousePosY = e.changedTouches[0].pageY - ((slideHeight / 2) + containerPaddingTop + containerTop);
-    phonePositionCount();
+    translateY = e.changedTouches[0].pageY - ((slideHeight / 2) + containerPaddingTop + containerTop);
+    // phonePositionCount();
+    apply_coords();
   })
 
 
