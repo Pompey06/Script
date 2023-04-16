@@ -60,17 +60,9 @@ $(document).ready(function () {
       } else {
         zoomOut = delta ? delta < 0 : e.originalEvent.deltaY > 0;
       }
-      // if (zoomOut) {
-      // 	translateZ = translateZ - stepZ;
-      // } else {
-      // 	translateZ = translateZ + stepZ;
-      // }
-
       if (zoomOut) {
         onZoomOut();
-        // scaleCount = (scaleCount > 0.5) ? scaleCount - stepScale : scaleCount;
       } else {
-        // scaleCount = (scaleCount < 3) ? scaleCount + stepScale : scaleCount;
         onZoomIn();
       }
       apply_coords();
@@ -97,7 +89,6 @@ $(document).ready(function () {
   }
 
   function phonePositionCount() {
-    // const maxPosX = containerWidth - (containerPaddingLeft + slideWidth);
     const maxPosX = containerPaddingRight;
     translateX = (lastMousePosX <= -containerPaddingLeft) ? -containerPaddingLeft : (lastMousePosX >= maxPosX) ? maxPosX : lastMousePosX;
 
@@ -110,9 +101,15 @@ $(document).ready(function () {
   function onDragging(e, is_phone = false) {
     if (is_phone) {
       if (is_dragging) {
-        e.preventDefault(); 
-        lastMousePosX = e.changedTouches[0].pageX - (slideWidth / 2);
-        lastMousePosY = e.changedTouches[0].pageY - ((slideHeight / 2) + containerPaddingTop + containerTop);
+        e.preventDefault();
+        console.log(slideWidth / startSlideWidth)
+        lastMousePosX =
+          (slideWidth / startSlideWidth >= 0.43)
+          ? e.changedTouches[0].pageX - ((slideWidth) + ((screen.width - containerWidth) / 2) + containerPaddingLeft)
+          : ((slideWidth / startSlideWidth < 0.15))
+          ? e.changedTouches[0].pageX - ((slideWidth * 3) + ((screen.width - containerWidth) / 2) + containerPaddingLeft) 
+          : e.changedTouches[0].pageX - ((slideWidth * 1.5) + ((screen.width - containerWidth) / 2) + containerPaddingLeft);
+        lastMousePosY = e.changedTouches[0].pageY - ((slideHeight / 2 ) + containerPaddingTop + containerTop);
         phonePositionCount();
       }
       return
