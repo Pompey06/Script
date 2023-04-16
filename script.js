@@ -44,6 +44,7 @@ $(document).ready(function () {
   function apply_coords() {
     $("#slide").css({ 'transform': 'translate(' + translateX + 'px, ' + translateY + 'px)', "min-width": slideWidth, 'width': slideWidth, "min-height": slideHeight, 'height': slideHeight });
     $("#slideContainer").css({ 'min-width': slideWidth, 'max-width': slideWidth, 'width': slideWidth });
+    containerWidth = $("#slideContainer").innerWidth();
   }
 
 
@@ -164,9 +165,11 @@ $(document).ready(function () {
       if (lastDist) {
         let delta = dist - lastDist;
         let scale = delta / 1000;
-        slideWidth = (slideWidth <= (startSlideWidth / 5)) ? slideWidth : (slideWidth >= (startSlideWidth * 5)) ? slideWidth :  slideWidth + (slideWidth * scale);
-        slideHeight = (slideHeight <= (startSlideHeight / 5)) ? slideHeight : (slideHeight >= (startSlideHeight * 5)) ? slideHeight : slideHeight + (slideHeight * scale);
-        $('#count').text(`slideWidth: ${slideWidth}, slideHeight: ${slideHeight}`)
+        const newSlideWidth = slideWidth + (slideWidth * scale);
+        const newSlideHeight = slideHeight + (slideHeight * scale);
+        slideWidth = (slideWidth <= (startSlideWidth / 5)) ? slideWidth : (slideWidth >= (startSlideWidth * 5)) ? slideWidth : newSlideWidth ;
+        slideHeight = (slideHeight <= (startSlideHeight / 5)) ? slideHeight : (slideHeight >= (startSlideHeight * 5)) ? slideHeight : newSlideHeight;
+        $('#count').text(`slideWidth: ${slideWidth}, slideHeight: ${slideHeight}, scale: ${scale}`);
         apply_coords();
       }
       lastDist = dist;
