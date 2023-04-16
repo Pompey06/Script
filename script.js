@@ -170,6 +170,8 @@ $(document).ready(function () {
         const newSlideHeight = slideHeight + (slideHeight * scale);
         slideWidth = (slideWidth <= (startSlideWidth / 5)) ? slideWidth : (slideWidth >= (startSlideWidth * 5)) ? slideWidth : newSlideWidth ;
         slideHeight = (slideHeight <= (startSlideHeight / 5)) ? slideHeight : (slideHeight >= (startSlideHeight * 5)) ? slideHeight : newSlideHeight;
+        $("#slideContainer").css({ 'min-width': slideWidth, 'max-width': slideWidth, 'width': slideWidth });
+        containerWidth = $("#slideContainer").innerWidth();
         $('#count').text(`slideWidth: ${slideWidth}, slideHeight: ${slideHeight}, scale: ${scale}`);
         apply_coords();
       }
