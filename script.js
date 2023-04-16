@@ -162,18 +162,20 @@ $(document).ready(function () {
 
   $("#slideContainer").on('touchmove', e => {
     if (e.touches.length == 2) {
-        var touch1 = e.touches[0];
-        var touch2 = e.touches[1];
-        var dist = Math.hypot(touch2.pageX - touch1.pageX, touch2.pageY - touch1.pageY);
-        if (lastDist) {
-          var delta = dist - lastDist;
-          var scale = delta / 100;
-          var img = document.querySelector("img");
-          var width = img.offsetWidth;
-          var height = img.offsetHeight;
-          img.style.width = width + width * scale + "px";
-          img.style.height = height + height * scale + "px";
-        }
+      var touch1 = e.touches[0];
+      var touch2 = e.touches[1];
+      var dist = Math.hypot(touch2.pageX - touch1.pageX, touch2.pageY - touch1.pageY);
+      if (lastDist) {
+        var delta = dist - lastDist;
+        var scale = delta / 100;
+        slideWidth = slideWidth * dist;
+        slideHeight = slideHeight * dist;
+        apply_coords();
+        var width = img.offsetWidth;
+        var height = img.offsetHeight;
+        img.style.width = width + width * scale + "px";
+        img.style.height = height + height * scale + "px";
+      }
       lastDist = dist;
       return;
     } else {
