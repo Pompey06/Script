@@ -1,23 +1,6 @@
-<!-- <h1>Helo</h1> -->
-<div id="slideContainer">
-  <div id="slide">
-    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate minus quasi voluptatibus, tempora eaque, laboriosam necessitatibus sint, nisi officiis ipsum magnam earum repellendus quibusdam reiciendis fuga nesciunt doloremque consequuntur exercitationem.
-    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus, iusto. Natus doloribus distinctio sequi rerum, voluptas hic laboriosam similique ullam architecto aut quos cum! Optio vel corporis ipsum officiis distinctio.
-    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque beatae omnis, neque harum quasi voluptatem, nobis eligendi consequatur praesentium aut ratione, necessitatibus nisi aliquid saepe maxime facere. Recusandae, dolor ratione!
-    <!-- <img  src="2023-04-16 00.10.31.jpg" alt=""> -->
-  </div>
-</div>
-<div class="btn-wrap"> 
-  <button id="zoom-in">+</button>
-  <button id="zoom-out">-</button>
-</div>
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script src="script.js"></script>
 <style>
   img {
-    /* max-height: 200px; */
+    max-height: 200px;
     width: 100%;
     max-width: 100%;
   }
@@ -55,8 +38,35 @@
     position: relative;
     top: 300px;
     background-color: #ccc;
-    padding: 50px;
-    max-width: 932px;
+    margin: 0;
+    overflow: hidden;
+    padding: 1rem;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+  }
+
+  #slide {
+    width: 942px;
+    height: 1786px;
+    display: block;
+    padding: 45px;
     margin: 0 auto;
+    box-shadow: 2px 2px 8px rgb(0 0 0 / 20%);
+    background: white;
+
+    /* zoom: 78%; */
+    /* Использовал его раньше, но на яблочных устройствах он не работает */
   }
 </style>
+
+<div id="slideContainer">
+  <div id="slide">Форма</div>
+</div>
+<div class="btn-wrap">
+  <button id="zoom-in">+</button>
+  <button id="zoom-out">-</button>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="script.js"></script>
