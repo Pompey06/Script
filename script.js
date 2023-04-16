@@ -78,7 +78,6 @@ $(document).ready(function () {
   function onZoomIn() {
     slideWidth = (slideWidth < (startSlideWidth * 5)) ? slideWidth + slideWidthStep : slideWidth;
     slideHeight = (slideHeight < (startSlideHeight * 5)) ? slideHeight + slideHeightStep : slideHeight;
-    // $("#slideContainer").css({ 'min-width': containerWidth * (slideWidth / startSlideWidth) });
     let countContainerWidth = slideWidth;
     $("#slideContainer").css({ 'min-width': countContainerWidth, 'max-width': countContainerWidth, 'width': countContainerWidth });
     containerWidth = $("#slideContainer").innerWidth();
@@ -87,8 +86,6 @@ $(document).ready(function () {
   function onZoomOut() {
     slideWidth = (slideWidth > (startSlideWidth / 5)) ? slideWidth - slideWidthStep : slideWidth;
     slideHeight = (slideHeight > (startSlideHeight / 5)) ? slideHeight - slideHeightStep : slideHeight;
-    // $("#slideContainer").css({ 'min-width': containerWidth * (slideWidth / startSlideWidth) });
-
     let countContainerWidth = slideWidth;
     $("#slideContainer").css({ 'min-width': countContainerWidth, 'max-width': countContainerWidth, 'width': countContainerWidth });
     containerWidth = $("#slideContainer").innerWidth();
@@ -167,14 +164,10 @@ $(document).ready(function () {
       var dist = Math.hypot(touch2.pageX - touch1.pageX, touch2.pageY - touch1.pageY);
       if (lastDist) {
         var delta = dist - lastDist;
-        var scale = delta / 100;
-        slideWidth = slideWidth * dist;
-        slideHeight = slideHeight * dist;
+        slideWidth = slideWidth * delta;
+        slideHeight = slideHeight * delta;
+        $('#count').text(`slideWidth: ${slideWidth}, slideHeight: ${slideHeight}`)
         apply_coords();
-        var width = img.offsetWidth;
-        var height = img.offsetHeight;
-        img.style.width = width + width * scale + "px";
-        img.style.height = height + height * scale + "px";
       }
       lastDist = dist;
       return;
