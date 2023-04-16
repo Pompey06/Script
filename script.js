@@ -43,6 +43,7 @@ $(document).ready(function () {
 
   function apply_coords() {
     $("#slide").css({ 'transform': 'translate(' + translateX + 'px, ' + translateY + 'px)', "min-width": slideWidth, 'width': slideWidth, "min-height": slideHeight, 'height': slideHeight });
+    $("#slideContainer").css({ 'min-width': slideWidth, 'max-width': slideWidth, 'width': slideWidth });
   }
 
 
