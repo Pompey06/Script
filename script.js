@@ -97,7 +97,8 @@ $(document).ready(function () {
   }
 
   function phonePositionCount() {
-    const maxPosX = containerWidth - (containerPaddingLeft + slideWidth);
+    // const maxPosX = containerWidth - (containerPaddingLeft + slideWidth);
+    const maxPosX = containerPaddingRight;
     translateX = (lastMousePosX <= -containerPaddingLeft) ? -containerPaddingLeft : (lastMousePosX >= maxPosX) ? maxPosX : lastMousePosX;
 
     const maxPosY = containerPaddingBottom;
