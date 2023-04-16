@@ -10,10 +10,10 @@ $(document).ready(function () {
 
     startSlideWidth = $("#slide").innerWidth(),
     slideWidth = $("#slide").innerWidth(),
-    slideWidthStep = $("#slide").innerWidth() / 10,
+    slideWidthStep = $("#slide").innerWidth() / 7,
     startSlideHeight = $("#slide").innerHeight(),
     slideHeight = $("#slide").innerHeight(),
-    slideHeightStep = $("#slide").innerHeight() / 10,
+    slideHeightStep = $("#slide").innerHeight() / 7,
 
     containerTop = $('#slideContainer').position().top,
     containerLeft = $('#slideContainer').position().left,
@@ -42,7 +42,7 @@ $(document).ready(function () {
     initial_mouse_Y = 0;
 
   function apply_coords() {
-    $("#slide").css({ 'transform': 'translate(' + translateX + 'px, ' + translateY + 'px)', "width": slideWidth, "min-height": slideHeight });
+    $("#slide").css({ 'transform': 'translate(' + translateX + 'px, ' + translateY + 'px)', "min-width": slideWidth, 'width': slideWidth, "min-height": slideHeight, 'height': slideHeight });
   }
 
 
@@ -76,13 +76,22 @@ $(document).ready(function () {
   });
 
   function onZoomIn() {
-    slideWidth = (slideWidth < (startSlideWidth * 3)) ? slideWidth + slideWidthStep : slideWidth;
-    slideHeight = (slideHeight < (startSlideHeight * 3)) ? slideHeight + slideHeightStep : slideHeight;
+    slideWidth = (slideWidth < (startSlideWidth * 5)) ? slideWidth + slideWidthStep : slideWidth;
+    slideHeight = (slideHeight < (startSlideHeight * 5)) ? slideHeight + slideHeightStep : slideHeight;
+    // $("#slideContainer").css({ 'min-width': containerWidth * (slideWidth / startSlideWidth) });
+    let countContainerWidth = slideWidth;
+    $("#slideContainer").css({ 'min-width': countContainerWidth, 'max-width': countContainerWidth, 'width': countContainerWidth });
+    containerWidth = $("#slideContainer").innerWidth();
   }
 
   function onZoomOut() {
-    slideWidth = (slideWidth > (startSlideWidth / 3)) ? slideWidth - slideWidthStep : slideWidth;
-    slideHeight = (slideHeight > (startSlideHeight / 3)) ? slideHeight - slideHeightStep : slideHeight;
+    slideWidth = (slideWidth > (startSlideWidth / 5)) ? slideWidth - slideWidthStep : slideWidth;
+    slideHeight = (slideHeight > (startSlideHeight / 5)) ? slideHeight - slideHeightStep : slideHeight;
+    // $("#slideContainer").css({ 'min-width': containerWidth * (slideWidth / startSlideWidth) });
+
+    let countContainerWidth = slideWidth;
+    $("#slideContainer").css({ 'min-width': countContainerWidth, 'max-width': countContainerWidth, 'width': countContainerWidth });
+    containerWidth = $("#slideContainer").innerWidth();
   }
 
   function removePxStr(str) {
@@ -92,8 +101,8 @@ $(document).ready(function () {
 
   function phonePositionCount() {
     const maxPosX = containerWidth - (containerPaddingLeft + slideWidth);
+    // console.log(containerWidth, maxPosX, slide);
     translateX = (lastMousePosX <= -containerPaddingLeft) ? -containerPaddingLeft : (lastMousePosX >= maxPosX) ? maxPosX : lastMousePosX;
-    apply_coords();
     const maxPosY = containerPaddingBottom;
     translateY = (lastMousePosY <= -containerPaddingTop) ? -containerPaddingTop : (lastMousePosY >= maxPosY) ? maxPosY : lastMousePosY;
     apply_coords();
@@ -115,7 +124,6 @@ $(document).ready(function () {
       lastMousePosX = initial_obj_X + (e.pageX - initial_mouse_X);
       lastMousePosY = initial_obj_Y + (e.pageY - initial_mouse_Y);
       const maxPosX = containerWidth - (containerPaddingLeft + slideWidth);
-      console.log(maxPosX, lastMousePosX);
       translateX = (lastMousePosX <= -containerPaddingLeft) ? -containerPaddingLeft : (lastMousePosX >= maxPosX) ? maxPosX : lastMousePosX;
       translateY = (lastMousePosY <= -containerPaddingTop) ? -containerPaddingTop : (lastMousePosY >= containerPaddingBottom) ? containerPaddingBottom : lastMousePosY;
       apply_coords();
@@ -124,7 +132,6 @@ $(document).ready(function () {
       initial_mouse_Y = e.pageY;
       initial_obj_X = translateX;
       initial_obj_Y = translateY;
-      // console.log(translateX, containerWidth);
     }
   }
 
@@ -151,43 +158,37 @@ $(document).ready(function () {
     phonePositionCount();
   })
 
+  var lastDist = null;
+
+  $("#slideContainer").on('touchmove', e => {
+    if (e.touches.length == 2) {
+        var touch1 = e.touches[0];
+        var touch2 = e.touches[1];
+        var dist = Math.hypot(touch2.pageX - touch1.pageX, touch2.pageY - touch1.pageY);
+        if (lastDist) {
+          var delta = dist - lastDist;
+          var scale = delta / 100;
+          var img = document.querySelector("img");
+          var width = img.offsetWidth;
+          var height = img.offsetHeight;
+          img.style.width = width + width * scale + "px";
+          img.style.height = height + height * scale + "px";
+        }
+      lastDist = dist;
+      return;
+    } else {
+      onDragging(e, 'touchmove', true);
+    }
+  })
+
+
   $("#slideContainer").on('touchstart', e => {
     is_dragging = true;
   })
 
   $("#slideContainer").on('touchend', e => {
     is_dragging = false;
+    lastDist = null;
   })
 
-  // function calculateScale(touch1, touch2) {
-  //   // Вычисление расстояния между двумя точками на экране
-  //   var dx = touch1.clientX - touch2.clientX;
-  //   var dy = touch1.clientY - touch2.clientY;
-  //   var distance = Math.sqrt(dx * dx + dy * dy);
-  //   // Вычисление масштаба на основе расстояния между двумя точками
-  //   return distance;
-  // }
-
-  $("#slideContainer").on('touchmove', e => {
-    if (e.touches.length == 2) {
-      // phoneToucheOne
-      // phoneToucheTwo
-      // Вычисление текущего масштаба страницы на основе координат движения пальцев
-      // var currentScale = calculateScale(e.touches[0], e.touches[1]);
-      // var dx = touch1.clientX - touch2.clientX;
-      // var dy = touch1.clientY - touch2.clientY;
-      // var distance = Math.sqrt(dx * dx + dy * dy);
-      // $('#count').text('start');
-      // if (distance > lastDistance) {
-      //   $('#count').text('distance > lastDistance');
-      //   lastDistance = distance;
-      // } else {
-      //   $('#count').text('distance < lastDistance');
-      //   lastDistance = distance;
-      // }
-      return;
-    } else {
-      onDragging(e, 'touchmove', true);
-    }
-  })
 });
