@@ -98,6 +98,7 @@ $(document).ready(function () {
   function phonePositionCount() {
     const maxPosX = containerWidth - (containerPaddingLeft + slideWidth);
     translateX = (lastMousePosX <= -containerPaddingLeft) ? -containerPaddingLeft : (lastMousePosX >= maxPosX) ? maxPosX : lastMousePosX;
+
     const maxPosY = containerPaddingBottom;
     translateY = (lastMousePosY <= -containerPaddingTop) ? -containerPaddingTop : (lastMousePosY >= maxPosY) ? maxPosY : lastMousePosY;
     apply_coords();
@@ -107,7 +108,7 @@ $(document).ready(function () {
   function onDragging(e, type, is_phone = false) {
     if (is_phone) {
       if (is_dragging) {
-        e.preventDefault();
+        e.preventDefault(); 
         lastMousePosX = e.changedTouches[0].pageX - (slideWidth / 2);
         lastMousePosY = e.changedTouches[0].pageY - ((slideHeight / 2) + containerPaddingTop + containerTop);
         phonePositionCount();
@@ -162,7 +163,7 @@ $(document).ready(function () {
       var dist = Math.hypot(touch2.pageX - touch1.pageX, touch2.pageY - touch1.pageY);
       if (lastDist) {
         let delta = dist - lastDist;
-        let scale = delta / 7;
+        let scale = delta / 1000;
         slideWidth = (slideWidth <= (startSlideWidth / 5)) ? slideWidth : (slideWidth >= (startSlideWidth * 5)) ? slideWidth :  slideWidth + (slideWidth * scale);
         slideHeight = (slideHeight <= (startSlideHeight / 5)) ? slideHeight : (slideHeight >= (startSlideHeight * 5)) ? slideHeight : slideHeight + (slideHeight * scale);
         $('#count').text(`slideWidth: ${slideWidth}, slideHeight: ${slideHeight}`)
