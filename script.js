@@ -4,8 +4,6 @@ $(document).ready(function () {
     lastMousePosX = 0,
     lastMousePosY = 0,
 
-
-
     slidePaddingTop = removePxStr($('#slide').css("padding-top")),
     slidePaddingLeft = removePxStr($('#slide').css("padding-left")),
     slidePaddingBottom = removePxStr($('#slide').css("padding-bottom")),
@@ -40,7 +38,7 @@ $(document).ready(function () {
     initial_mouse_Y = 0;
 
   function apply_coords() {
-    $("#slide").css({ 'transform': 'translate(' + translateX + 'px, ' + translateY + 'px)', "min-width": slideWidth, 'width': slideWidth });
+    $("#slide").css({ 'transform': 'translate(' + translateX + 'px, ' + translateY + 'px)', "min-width": slideWidth, 'width': slideWidth, 'min-height': slideHeight });
     getSlideMargins();
     // $("#slideContainer").css({ 'min-width': slideWidth, 'max-width': slideWidth, 'width': slideWidth });
     // containerWidth = $("#slideContainer").innerWidth();
@@ -79,15 +77,21 @@ $(document).ready(function () {
   function onZoomIn() {
     slideWidth = (slideWidth < (startSlideWidth * 5)) ? slideWidth + slideWidthStep : slideWidth;
     slideHeight = (slideHeight < (startSlideHeight * 5)) ? slideHeight + slideHeightStep : slideHeight;
-    // $("#slideContainer").css({ 'min-width': slideWidth, 'max-width': slideWidth, 'width': slideWidth });
-    // containerWidth = $("#slideContainer").innerWidth();
+    // const newContainerWidth = containerWidth * (slideWidth / startSlideWidth);
+    // const newContainerHeight = containerWidth * (slideWidth / startSlideWidth);
+
+    // $("#slideContainer").css({ 'min-width': newContainerWidth, 'max-width': newContainerWidth, 'width': newContainerWidth });
+    containerWidth = $("#slideContainer").innerWidth();
   }
 
   function onZoomOut() {
     slideWidth = (slideWidth > (startSlideWidth / 5)) ? slideWidth - slideWidthStep : slideWidth;
     slideHeight = (slideHeight > (startSlideHeight / 5)) ? slideHeight - slideHeightStep : slideHeight;
-    // $("#slideContainer").css({ 'min-width': slideWidth, 'max-width': slideWidth, 'width': slideWidth });
-    // containerWidth = $("#slideContainer").innerWidth();
+    // const newContainerWidth = containerWidth * (slideWidth / startSlideWidth);
+    // const newContainerHeight = containerWidth * (slideWidth / startSlideWidth);
+
+    // $("#slideContainer").css({ 'min-width': newContainerWidth, 'max-width': newContainerWidth, 'width': newContainerWidth });
+    containerWidth = $("#slideContainer").innerWidth();
   }
 
   function removePxStr(str) {

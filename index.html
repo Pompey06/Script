@@ -41,6 +41,8 @@
     margin: 0;
     overflow: hidden;
     padding: 1rem;
+    margin: 0 auto;
+    max-width: max-content;
     /* display: flex;
     justify-content: center;
     align-items: center; */
@@ -48,20 +50,40 @@
 
   #slide {
     width: 942px;
-    height: 1786px;
     display: block;
-    padding: 45px;
     margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .page {
+    width: calc(100% - 90px);
+    padding: 45px;
     box-shadow: 2px 2px 8px rgb(0 0 0 / 20%);
     background: white;
+  }
 
-    /* zoom: 78%; */
-    /* Использовал его раньше, но на яблочных устройствах он не работает */
+  .page:not(:last-child) {
+    margin-bottom: 1em;
   }
 </style>
 
 <div id="slideContainer">
-  <div id="slide">Форма</div>
+  <div id="slide">
+    <div class="page">Форма страницы 1
+      <div><input type="text"></div>
+      <div><input type="text"></div>
+      <div><input type="text"></div>
+      <div><input type="text"></div>
+      <div><input type="text"></div>
+    </div>
+    <div class="page">Форма форма страницы 2
+      <div><input type="text"></div>
+      <div><input type="text"></div>
+      <div><input type="text"></div>
+      <div><input type="text"></div>
+      <div><input type="text"></div>
+    </div>
+  </div>
 </div>
 <div class="btn-wrap">
   <button id="zoom-in">+</button>
