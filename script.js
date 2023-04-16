@@ -162,7 +162,8 @@ $(document).ready(function () {
     if (e.touches.length == 2) {
       var touch1 = e.touches[0];
       var touch2 = e.touches[1];
-      var dist = Math.hypot(touch2.pageX - touch1.pageX, touch2.pageY - touch1.pageY);
+      // var dist = Math.hypot(touch2.pageX - touch1.pageX, touch2.pageY - touch1.pageY);
+      var dist = Math.sqrt((touch2.pageX - touch1.pageX) * (touch2.pageX - touch1.pageX) + (touch2.pageY - touch1.pageY) * (touch2.pageY - touch1.pageY));
       if (lastDist) {
         let delta = dist - lastDist;
         let scale = delta / 10;
