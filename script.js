@@ -167,12 +167,17 @@ $(document).ready(function () {
       if (lastDist) {
         let delta = dist - lastDist;
         let scale = delta / 10;
-        const newSlideWidth = slideWidth + (slideWidth * scale);
-        const newSlideHeight = slideHeight + (slideHeight * scale);
-        slideWidth = (slideWidth <= (startSlideWidth / 5)) ? slideWidth : (slideWidth >= (startSlideWidth * 5)) ? slideWidth : newSlideWidth ;
-        slideHeight = (slideHeight <= (startSlideHeight / 5)) ? slideHeight : (slideHeight >= (startSlideHeight * 5)) ? slideHeight : newSlideHeight;
-        $("#slideContainer").css({ 'min-width': slideWidth, 'max-width': slideWidth, 'width': slideWidth });
-        containerWidth = $("#slideContainer").innerWidth();
+        // const newSlideWidth = slideWidth + (slideWidth * scale);
+        // const newSlideHeight = slideHeight + (slideHeight * scale);
+        // slideWidth = (slideWidth <= (startSlideWidth / 5)) ? slideWidth : (slideWidth >= (startSlideWidth * 5)) ? slideWidth : newSlideWidth ;
+        // slideHeight = (slideHeight <= (startSlideHeight / 5)) ? slideHeight : (slideHeight >= (startSlideHeight * 5)) ? slideHeight : newSlideHeight;
+        // $("#slideContainer").css({ 'min-width': slideWidth, 'max-width': slideWidth, 'width': slideWidth });
+        if (scale > 0) {
+          onZoomIn();
+        } else if (scale < 0) {
+          onZoomOut();
+        }
+        // containerWidth = $("#slideContainer").innerWidth();
         // $('#count').text(`slideWidth: ${slideWidth}, slideHeight: ${slideHeight}, scale: ${scale}`);
         $('#scale').text(`${scale}`);
         apply_coords();
