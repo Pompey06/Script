@@ -78,16 +78,14 @@ $(document).ready(function () {
   function onZoomIn() {
     slideWidth = (slideWidth < (startSlideWidth * 5)) ? slideWidth + slideWidthStep : slideWidth;
     slideHeight = (slideHeight < (startSlideHeight * 5)) ? slideHeight + slideHeightStep : slideHeight;
-    let countContainerWidth = slideWidth;
-    $("#slideContainer").css({ 'min-width': countContainerWidth, 'max-width': countContainerWidth, 'width': countContainerWidth });
+    $("#slideContainer").css({ 'min-width': slideWidth, 'max-width': slideWidth, 'width': slideWidth });
     containerWidth = $("#slideContainer").innerWidth();
   }
 
   function onZoomOut() {
     slideWidth = (slideWidth > (startSlideWidth / 5)) ? slideWidth - slideWidthStep : slideWidth;
     slideHeight = (slideHeight > (startSlideHeight / 5)) ? slideHeight - slideHeightStep : slideHeight;
-    let countContainerWidth = slideWidth;
-    $("#slideContainer").css({ 'min-width': countContainerWidth, 'max-width': countContainerWidth, 'width': countContainerWidth });
+    $("#slideContainer").css({ 'min-width': slideWidth, 'max-width': slideWidth, 'width': slideWidth });
     containerWidth = $("#slideContainer").innerWidth();
   }
 
@@ -98,7 +96,6 @@ $(document).ready(function () {
 
   function phonePositionCount() {
     const maxPosX = containerWidth - (containerPaddingLeft + slideWidth);
-    // console.log(containerWidth, maxPosX, slide);
     translateX = (lastMousePosX <= -containerPaddingLeft) ? -containerPaddingLeft : (lastMousePosX >= maxPosX) ? maxPosX : lastMousePosX;
     const maxPosY = containerPaddingBottom;
     translateY = (lastMousePosY <= -containerPaddingTop) ? -containerPaddingTop : (lastMousePosY >= maxPosY) ? maxPosY : lastMousePosY;
@@ -163,9 +160,10 @@ $(document).ready(function () {
       var touch2 = e.touches[1];
       var dist = Math.hypot(touch2.pageX - touch1.pageX, touch2.pageY - touch1.pageY);
       if (lastDist) {
-        var delta = dist - lastDist;
-        slideWidth = slideWidth * delta;
-        slideHeight = slideHeight * delta;
+        let delta = dist - lastDist;
+        let scale = delta / 7;
+        slideWidth = (slideWidth <= (startSlideWidth / 5)) ? slideWidth : (slideWidth >= (startSlideWidth * 5)) ? slideWidth :  slideWidth + (slideWidth * scale);
+        slideHeight = (slideHeight <= (startSlideHeight / 5)) ? slideHeight : (slideHeight >= (startSlideHeight * 5)) ? slideHeight : slideHeight + (slideHeight * scale);
         $('#count').text(`slideWidth: ${slideWidth}, slideHeight: ${slideHeight}`)
         apply_coords();
       }
