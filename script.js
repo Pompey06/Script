@@ -106,7 +106,7 @@ $(document).ready(function () {
   }
 
 
-  function onDragging(e, type, is_phone = false) {
+  function onDragging(e, is_phone = false) {
     if (is_phone) {
       if (is_dragging) {
         e.preventDefault(); 
@@ -139,7 +139,7 @@ $(document).ready(function () {
       is_dragging = true;
     })
     .mousemove(function (e) {
-      onDragging(e, 'touchend')
+      onDragging(e)
     })
     .mouseup(function () {
       is_dragging = false;
@@ -164,7 +164,7 @@ $(document).ready(function () {
       var dist = Math.hypot(touch2.pageX - touch1.pageX, touch2.pageY - touch1.pageY);
       if (lastDist) {
         let delta = dist - lastDist;
-        let scale = delta / 100;
+        let scale = delta / 10;
         const newSlideWidth = slideWidth + (slideWidth * scale);
         const newSlideHeight = slideHeight + (slideHeight * scale);
         slideWidth = (slideWidth <= (startSlideWidth / 5)) ? slideWidth : (slideWidth >= (startSlideWidth * 5)) ? slideWidth : newSlideWidth ;
@@ -175,7 +175,13 @@ $(document).ready(function () {
       lastDist = dist;
       return;
     } else {
-      onDragging(e, 'touchmove', true);
+      onDragging(e, true);
+    }
+  })
+
+  $(window).on('touchmove', e => {
+    if (e.touches.length == 2) {
+      e.preventDefault();
     }
   })
 
