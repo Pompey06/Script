@@ -325,15 +325,15 @@ $(document).ready(function () {
     }
   })
 
-  function phonePositionCount() {
-    // const maxPosX = containerPaddingRight + slideMarginRight;
-    // translateX = (lastMousePosX <= -(containerPaddingLeft + slideMarginLeft)) ? -(containerPaddingLeft + slideMarginLeft) : (lastMousePosX >= maxPosX) ? maxPosX : lastMousePosX;
-    translateX = lastMousePosX;
-    translateY = lastMousePosY;
-    // const maxPosY = containerPaddingBottom + slideMarginBottom;
-    // translateY = (lastMousePosY <= -containerPaddingTop) ? -containerPaddingTop : (lastMousePosY >= maxPosY) ? maxPosY : lastMousePosY;
-    apply_coords();
-  }
+  // function phonePositionCount() {
+  //   // const maxPosX = containerPaddingRight + slideMarginRight;
+  //   // translateX = (lastMousePosX <= -(containerPaddingLeft + slideMarginLeft)) ? -(containerPaddingLeft + slideMarginLeft) : (lastMousePosX >= maxPosX) ? maxPosX : lastMousePosX;
+  //   translateX = lastMousePosX;
+  //   translateY = lastMousePosY;
+  //   // const maxPosY = containerPaddingBottom + slideMarginBottom;
+  //   // translateY = (lastMousePosY <= -containerPaddingTop) ? -containerPaddingTop : (lastMousePosY >= maxPosY) ? maxPosY : lastMousePosY;
+  //   apply_coords();
+  // }
 
   function removePxStr(str) {
     const indexOfPx = str.indexOf('px');
@@ -366,7 +366,6 @@ $(document).ready(function () {
         ? e.changedTouches[0].pageX - ((slideWidth) + ((screen.width - containerWidth) / 2) + containerPaddingLeft)
         : e.changedTouches[0].pageX - ((slideWidth * 2) + ((screen.width - containerWidth) / 2) + containerPaddingLeft);
     translateY = e.changedTouches[0].pageY - ((slideHeight / 2) + containerPaddingTop + containerTop);
-    // phonePositionCount();
     apply_coords();
   })
 
