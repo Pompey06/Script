@@ -10,38 +10,6 @@ $(document).ready(function () {
     initial_mouse_Y = 0,
 
 
-
-    lastMousePosX = 0,
-    lastMousePosY = 0,
-    slidePaddingTop = removePxStr($('#slide').css("padding-top")),
-    slidePaddingLeft = removePxStr($('#slide').css("padding-left")),
-    slidePaddingBottom = removePxStr($('#slide').css("padding-bottom")),
-    slidePaddingRight = removePxStr($('#slide').css("padding-right")),
-
-    slideMarginTop = removePxStr($('#slide').css("margin-top")),
-    slideMarginLeft = removePxStr($('#slide').css("margin-left")),
-    slideMarginBottom = removePxStr($('#slide').css("margin-bottom")),
-    slideMarginRight = removePxStr($('#slide').css("margin-right")),
-
-
-    startSlideWidth = $("#slide").innerWidth(),
-    slideWidth = startSlideWidth - (slidePaddingLeft + slidePaddingRight),
-    slideWidthStep = $("#slide").innerWidth() / 7,
-    startSlideHeight = $("#slide").innerHeight(),
-    slideHeight = $("#slide").innerHeight(),
-    slideHeightStep = $("#slide").innerHeight() / 7,
-
-    containerTop = $('#slideContainer').position().top,
-
-    containerPaddingTop = removePxStr($('#slideContainer').css("padding-top")),
-    containerPaddingLeft = removePxStr($('#slideContainer').css("padding-left")),
-    containerPaddingBottom = removePxStr($('#slideContainer').css("padding-bottom")),
-    containerPaddingRight = removePxStr($('#slideContainer').css("padding-right")),
-
-
-    containerWidth = $("#slideContainer").innerWidth(),
-
-
     slideHeight = $("#slide").innerHeight(),
     containerHeight = $("#slideContainer").innerHeight(),
     ratioContainerToSlideH = containerHeight / slideHeight;
@@ -90,7 +58,6 @@ $(document).ready(function () {
         var currentY = e.type === 'touchend' ? e.changedTouches[0].pageY : e.pageY;
         translateX = initial_obj_X + (currentX - initial_mouse_X);
         translateY = initial_obj_Y + (currentY - initial_mouse_Y);
-        // console.log("initial_mouse_Y", initial_mouse_Y);
         apply_coords();
       } else {
         initial_mouse_X = e.type === 'touchend' ? e.changedTouches[0].pageX : e.pageX;
@@ -175,16 +142,4 @@ $(document).ready(function () {
     initial_obj_X = translateX;
     initial_obj_Y = translateY;
   })
-
-
-    // e.preventDefault();
-    // translateX =
-    //   (slideWidth / startSlideWidth >= 0.43)
-    //     ? e.changedTouches[0].pageX - ((slideWidth) + ((screen.width - containerWidth) / 2) + containerPaddingLeft)
-    //     : e.changedTouches[0].pageX - ((slideWidth * 2) + ((screen.width - containerWidth) / 2) + containerPaddingLeft);
-    // translateY = e.changedTouches[0].pageY - ((slideHeight / 2) + containerPaddingTop + containerTop);
-    // apply_coords();
-
-
-  
 });
