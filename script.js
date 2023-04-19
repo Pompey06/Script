@@ -9,6 +9,8 @@ $(document).ready(function () {
     initial_mouse_X = 0,
     initial_mouse_Y = 0,
 
+    ctrlDown = false,
+
 
     slideHeight = $("#slide").innerHeight(),
     containerHeight = $("#slideContainer").innerHeight(),
@@ -45,6 +47,18 @@ $(document).ready(function () {
     }
   });
 
+  $(document).on("keydown", (e) => {
+    if (e.metaKey || e.ctrlKey) {
+      console.log("Command/Ctrl нажата");
+      ctrlDown = true;
+    }
+  });
+
+  $(document).on("keyup", (e) => {
+    if (e.key === "Control" || e.key === "Meta") {
+      ctrlDown = false;
+    }
+  })
 
   var is_dragging = false;
   $("#slideContainer")
@@ -52,7 +66,7 @@ $(document).ready(function () {
       is_dragging = true;
     })
     .mousemove(function (e) {
-      if (is_dragging) {
+      if (is_dragging && ctrlDown) {
         e.preventDefault();
         var currentX = e.type === 'touchend' ? e.changedTouches[0].pageX : e.pageX;
         var currentY = e.type === 'touchend' ? e.changedTouches[0].pageY : e.pageY;
@@ -81,18 +95,13 @@ $(document).ready(function () {
     apply_coords();
   })
 
+  // MOBILE
+
   $(window).on('touchmove', e => {
     if (e.touches.length == 2) {
       e.preventDefault();
     }
   })
-
-  function removePxStr(str) {
-    const indexOfPx = str.indexOf('px');
-    return +str.slice(0, indexOfPx);
-  }
-
-
 
   $("#slideContainer").on('touchstart', e => {
     is_dragging = true;
